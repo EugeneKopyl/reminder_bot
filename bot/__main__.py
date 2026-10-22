@@ -41,16 +41,18 @@ async def run(settings: Settings) -> None:
     dispatcher.update.outer_middleware(AccessMiddleware(settings.allowed_user_ids))
     dispatcher.include_router(build_router())
 
-    await bot.set_my_commands(
-        [BotCommand(command=name, description=text) for name, text in texts.COMMANDS.items()]
-    )
-    scheduler_task = asyncio.create_task(scheduler.run())
+    scheduler_task: asyncio.Task[None] | None = None
     try:
+        await bot.set_my_commands(
+            [BotCommand(command=name, description=text) for name, text in texts.COMMANDS.items()]
+        )
+        scheduler_task = asyncio.create_task(scheduler.run())
         await dispatcher.start_polling(bot)
     finally:
-        scheduler_task.cancel()
-        with suppress(asyncio.CancelledError):
-            await scheduler_task
+        if scheduler_task is not None:
+            scheduler_task.cancel()
+            with suppress(asyncio.CancelledError):
+                await scheduler_task
         await engine.dispose()
         await bot.session.close()
 

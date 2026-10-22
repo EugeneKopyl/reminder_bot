@@ -149,7 +149,9 @@ def describe_rrule(rule: str, start: datetime, reference: date | None = None) ->
         body = "каждый час" if interval == 1 else f"каждые {count_phrase(interval, HOURS)}"
     elif frequency == "DAILY":
         times_phrase = _times_phrase(times)
-        if interval == 1 and not times_phrase.startswith("в "):
+        if "BYDAY" in parts:
+            body = f"{_weekly_phrase(parts, start, 1)} {times_phrase}"
+        elif interval == 1 and not times_phrase.startswith("в "):
             body = times_phrase
         else:
             body = f"{_every(interval, DAYS, 'каждый день')} {times_phrase}"
@@ -336,7 +338,15 @@ def _rule_times(parts: dict[str, str], start: datetime) -> list[time]:
     minutes = [minute for minute in _ints(parts.get("BYMINUTE")) if 0 <= minute <= 59] or [
         start.minute
     ]
-    return sorted(time(hour, minute) for hour in hours for minute in minutes)
+    times = sorted(time(hour, minute) for hour in hours for minute in minutes)
+    positions = [
+        position
+        for position in _ints(parts.get("BYSETPOS"))
+        if position != 0 and -len(times) <= position <= len(times)
+    ]
+    if not positions:
+        return times
+    return sorted({times[position - 1 if position > 0 else position] for position in positions})
 
 
 def _times_phrase(times: Sequence[time]) -> str:

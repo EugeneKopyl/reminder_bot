@@ -77,6 +77,15 @@ def test_format_moment_shows_year_only_when_it_differs() -> None:
             "через неделю после выполнения",
         ),
         (recurring("FREQ=SECONDLY"), "по особому расписанию"),
+        (
+            recurring("FREQ=DAILY;BYDAY=MO,TU,WE,TH,FR;BYHOUR=8,20;BYMINUTE=0,30;BYSETPOS=2,3"),
+            "по будням в 08:30 и 20:00",
+        ),
+        (recurring("FREQ=DAILY;BYDAY=SA,SU;BYHOUR=10;BYMINUTE=0"), "по выходным в 10:00"),
+        (
+            recurring("FREQ=DAILY;BYHOUR=8,21;BYMINUTE=15,40;BYSETPOS=1,-1"),
+            "каждый день в 08:15 и 21:40",
+        ),
     ],
 )
 def test_describe_schedule(schedule: Schedule, expected: str) -> None:

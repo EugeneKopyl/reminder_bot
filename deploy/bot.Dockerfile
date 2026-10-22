@@ -16,6 +16,8 @@ RUN --mount=type=cache,target=/root/.cache/uv \
     --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
     uv sync --locked --no-dev --no-install-project
 
+COPY alembic.ini ./
+COPY migrations ./migrations
 COPY bot ./bot
 
 RUN useradd --system --uid 10001 --no-create-home app \

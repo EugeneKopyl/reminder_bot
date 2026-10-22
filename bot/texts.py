@@ -51,6 +51,15 @@ def settings(timezone_label: str) -> str:
     return f"⚙️ Настройки\n\n🌍 Часовой пояс: {timezone_label}"
 
 
+COMMANDS = {
+    "today": "Напоминания на сегодня",
+    "week": "Напоминания на неделю",
+    "month": "Напоминания на месяц",
+    "all": "Все напоминания",
+    "settings": "Настройки",
+    "help": "Как пользоваться",
+}
+
 UNTITLED_REMINDER = "Напоминание"
 CARD_EDIT = "✏️ Изменить"
 CARD_DELETE = "🗑 Удалить"

@@ -2,7 +2,10 @@ from unittest.mock import AsyncMock
 
 from aiogram import Dispatcher
 from aiogram.types import Update
-from ui_fakes import (
+
+from bot.domain.parsing import ParseResult, ParseStatus
+from bot.handlers import build_router
+from tests.ui_fakes import (
     FakeReminderService,
     FixedClock,
     make_bot,
@@ -10,9 +13,6 @@ from ui_fakes import (
     make_message,
     parser_returning,
 )
-
-from bot.domain.parsing import ParseResult, ParseStatus
-from bot.handlers import build_router
 
 DISPATCHER = Dispatcher()
 DISPATCHER.include_router(build_router())

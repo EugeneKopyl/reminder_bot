@@ -1,0 +1,956 @@
+# now defaults to Thursday 2026-10-22 15:00 in the timezone below.
+# Omitted fields default to: status ok, kind once, no rrule/interval/tags/pre_offsets/alternatives,
+# priority normal, nagging false. Durations: 30m, 1h, 7d.
+timezone: Europe/Moscow
+now: "2026-10-22T15:00"
+cases:
+  # Spec examples
+  - phrase: "напомни завтра в 9 позвонить маме"
+    text: "Позвонить маме"
+    start: "2026-10-23T09:00"
+    alternatives: ["21:00"]
+  - phrase: "через полчаса выключить духовку"
+    text: "Выключить духовку"
+    start: "2026-10-22T15:30"
+  - phrase: "в пятницу вечером купить подарок"
+    text: "Купить подарок"
+    start: "2026-10-23T19:00"
+  - phrase: "5 марта в 10:30 стоматолог"
+    text: "Стоматолог"
+    start: "2027-03-05T10:30"
+  - phrase: "каждый день в 8 и в 20 таблетки"
+    text: "Таблетки"
+    kind: rrule
+    start: "2026-10-22T20:00"
+    rrule: "FREQ=DAILY;BYHOUR=8,20;BYMINUTE=0"
+  - phrase: "по будням в 9:00 планёрка"
+    text: "Планёрка"
+    kind: rrule
+    start: "2026-10-23T09:00"
+    rrule: "FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR;BYHOUR=9;BYMINUTE=0"
+  - phrase: "каждый второй вторник месяца в 10 отчёт"
+    text: "Отчёт"
+    kind: rrule
+    start: "2026-11-10T10:00"
+    rrule: "FREQ=MONTHLY;BYDAY=2TU;BYHOUR=10;BYMINUTE=0"
+    alternatives: ["22:00"]
+  - phrase: "в последний день месяца оплатить аренду"
+    text: "Оплатить аренду"
+    kind: rrule
+    start: "2026-10-31T09:00"
+    rrule: "FREQ=MONTHLY;BYMONTHDAY=-1;BYHOUR=9;BYMINUTE=0"
+  - phrase: "каждые 2 часа с 10 до 20 пить воду"
+    text: "Пить воду"
+    kind: rrule
+    start: "2026-10-22T16:00"
+    rrule: "FREQ=DAILY;BYHOUR=10,12,14,16,18,20;BYMINUTE=0"
+  - phrase: "каждые 3 дня полить цветы"
+    text: "Полить цветы"
+    kind: rrule
+    start: "2026-10-23T09:00"
+    rrule: "FREQ=DAILY;INTERVAL=3;BYHOUR=9;BYMINUTE=0"
+  - phrase: "полить цветы через 3 дня после полива"
+    text: "Полить цветы"
+    kind: after_completion
+    start: "2026-10-25T09:00"
+    interval: 3d
+  - phrase: "12 июня день рождения Пети, напомни за неделю"
+    text: "День рождения Пети"
+    kind: rrule
+    start: "2027-06-12T09:00"
+    rrule: "FREQ=YEARLY;BYMONTHDAY=12;BYMONTH=6;BYHOUR=9;BYMINUTE=0"
+    pre_offsets: [7d]
+  - phrase: "каждый день в 9 до конца ноября пить витамины"
+    text: "Пить витамины"
+    kind: rrule
+    start: "2026-10-23T09:00"
+    rrule: "FREQ=DAILY;BYHOUR=9;BYMINUTE=0;UNTIL=20261130T235959"
+    alternatives: ["21:00"]
+  - phrase: "срочно: завтра в 6 самолёт, напоминай пока не отвечу"
+    text: "Самолёт"
+    start: "2026-10-23T06:00"
+    priority: critical
+    nagging: true
+    alternatives: ["18:00"]
+  - phrase: "#работа в понедельник в 10 созвон"
+    text: "Созвон"
+    start: "2026-10-26T10:00"
+    tags: ["работа"]
+    alternatives: ["22:00"]
+
+  # Relative time
+  - phrase: "напомни мне через 10 минут что надо выключить духовку"
+    text: "Выключить духовку"
+    start: "2026-10-22T15:10"
+  - phrase: "через час позвонить в банк"
+    text: "Позвонить в банк"
+    start: "2026-10-22T16:00"
+  - phrase: "через 2 часа забрать посылку"
+    text: "Забрать посылку"
+    start: "2026-10-22T17:00"
+  - phrase: "через полтора часа проверить тесто"
+    text: "Проверить тесто"
+    start: "2026-10-22T16:30"
+  - phrase: "через пару часов перезвонить Ивану"
+    text: "Перезвонить Ивану"
+    start: "2026-10-22T17:00"
+  - phrase: "через 1 час 30 минут выйти из дома"
+    text: "Выйти из дома"
+    start: "2026-10-22T16:30"
+  - phrase: "через пятнадцать минут снять чайник"
+    text: "Снять чайник"
+    start: "2026-10-22T15:15"
+  - phrase: "через 5 мин выключить газ"
+    text: "Выключить газ"
+    start: "2026-10-22T15:05"
+  - phrase: "через полдня проверить"
+    text: "Проверить"
+    start: "2026-10-23T03:00"
+  - phrase: "через неделю продлить подписку"
+    text: "Продлить подписку"
+    start: "2026-10-29T09:00"
+  - phrase: "через 3 дня в 10 записаться к врачу"
+    text: "Записаться к врачу"
+    start: "2026-10-25T10:00"
+    alternatives: ["22:00"]
+  - phrase: "через месяц поменять фильтр"
+    text: "Поменять фильтр"
+    start: "2026-11-22T09:00"
+  - phrase: "через две недели сдать анализы"
+    text: "Сдать анализы"
+    start: "2026-11-05T09:00"
+  - phrase: "через 1 день проверить почту"
+    text: "Проверить почту"
+    start: "2026-10-23T09:00"
+  - phrase: "через день полить цветы"
+    text: "Полить цветы"
+    start: "2026-10-23T09:00"
+  - phrase: "через 2 дня позвонить"
+    text: "Позвонить"
+    start: "2026-10-24T09:00"
+  - phrase: "через сутки проверить результат"
+    text: "Проверить результат"
+    start: "2026-10-23T09:00"
+  - phrase: "через полгода техосмотр"
+    text: "Техосмотр"
+    start: "2027-04-22T09:00"
+  - phrase: "через год обновить сертификат"
+    text: "Обновить сертификат"
+    start: "2027-10-22T09:00"
+
+  # Days and dates
+  - phrase: "сегодня вечером купить хлеб"
+    text: "Купить хлеб"
+    start: "2026-10-22T19:00"
+  - phrase: "сегодня купить хлеб"
+    text: "Купить хлеб"
+    start: "2026-10-22T19:00"
+  - phrase: "завтра утром отнести документы"
+    text: "Отнести документы"
+    start: "2026-10-23T09:00"
+  - phrase: "послезавтра в 14:00 совещание"
+    text: "Совещание"
+    start: "2026-10-24T14:00"
+  - phrase: "напомни на завтра купить молоко"
+    text: "Купить молоко"
+    start: "2026-10-23T09:00"
+  - phrase: "в субботу в 11 уборка"
+    text: "Уборка"
+    start: "2026-10-24T11:00"
+    alternatives: ["23:00"]
+  - phrase: "в следующий вторник в 18:30 бассейн"
+    text: "Бассейн"
+    start: "2026-10-27T18:30"
+  - phrase: "в эту пятницу забрать машину"
+    text: "Забрать машину"
+    start: "2026-10-23T09:00"
+  - phrase: "во вторник позвонить бабушке"
+    text: "Позвонить бабушке"
+    start: "2026-10-27T09:00"
+  - phrase: "в понедельник 9:00 планёрка"
+    text: "Планёрка"
+    start: "2026-10-26T09:00"
+  - phrase: "на следующей неделе записаться к стоматологу"
+    text: "Записаться к стоматологу"
+    start: "2026-10-26T09:00"
+  - phrase: "в выходные съездить на дачу"
+    text: "Съездить на дачу"
+    start: "2026-10-24T09:00"
+  - phrase: "1 января поздравить всех"
+    text: "Поздравить всех"
+    start: "2027-01-01T09:00"
+  - phrase: "первого декабря оплатить страховку"
+    text: "Оплатить страховку"
+    start: "2026-12-01T09:00"
+  - phrase: "05.11 в 9 сдать отчёт"
+    text: "Сдать отчёт"
+    start: "2026-11-05T09:00"
+    alternatives: ["21:00"]
+  - phrase: "05.11.2026 в 9 сдать отчёт"
+    text: "Сдать отчёт"
+    start: "2026-11-05T09:00"
+    alternatives: ["21:00"]
+  - phrase: "25-го оплатить интернет"
+    text: "Оплатить интернет"
+    start: "2026-10-25T09:00"
+  - phrase: "15 числа заплатить за квартиру"
+    text: "Заплатить за квартиру"
+    start: "2026-11-15T09:00"
+  - phrase: "29 февраля поздравить Касьяна"
+    text: "Поздравить Касьяна"
+    start: "2028-02-29T09:00"
+  - phrase: "до пятницы сдать отчёт"
+    text: "Сдать отчёт"
+    start: "2026-10-23T09:00"
+  - phrase: "очень важно: продлить визу до 1 декабря"
+    text: "Продлить визу"
+    start: "2026-12-01T09:00"
+    priority: critical
+  - phrase: "купить 2 литра молока завтра"
+    text: "Купить 2 литра молока"
+    start: "2026-10-23T09:00"
+  - phrase: "Напомни завтра купить хлеб и молоко"
+    text: "Купить хлеб и молоко"
+    start: "2026-10-23T09:00"
+  - phrase: "напомни в субботу съездить к бабушке с мамой"
+    text: "Съездить к бабушке с мамой"
+    start: "2026-10-24T09:00"
+  - phrase: "купить 3 кг яблок и 2 л молока сегодня вечером"
+    text: "Купить 3 кг яблок и 2 л молока"
+    start: "2026-10-22T19:00"
+
+  # Clock times
+  - phrase: "в 7 сходить в спортзал"
+    text: "Сходить в спортзал"
+    start: "2026-10-22T19:00"
+    alternatives: ["завтра 07:00"]
+  - phrase: "в 11 позвонить"
+    text: "Позвонить"
+    start: "2026-10-22T23:00"
+    alternatives: ["завтра 11:00"]
+  - phrase: "в 12 обед"
+    text: "Обед"
+    start: "2026-10-23T12:00"
+  - phrase: "в 2 забрать посылку"
+    text: "Забрать посылку"
+    start: "2026-10-23T14:00"
+    alternatives: ["02:00"]
+  - phrase: "в 6 забрать сына"
+    text: "Забрать сына"
+    start: "2026-10-22T18:00"
+    alternatives: ["завтра 06:00"]
+  - phrase: "в 6 утра пробежка"
+    text: "Пробежка"
+    start: "2026-10-23T06:00"
+  - phrase: "в девять позвонить маме"
+    text: "Позвонить маме"
+    start: "2026-10-22T21:00"
+    alternatives: ["завтра 09:00"]
+  - phrase: "в час дня совещание"
+    text: "Совещание"
+    start: "2026-10-23T13:00"
+  - phrase: "в 9 утра йога"
+    text: "Йога"
+    start: "2026-10-23T09:00"
+  - phrase: "в 5 вечера встреча"
+    text: "Встреча"
+    start: "2026-10-22T17:00"
+  - phrase: "в 11 ночи лечь спать"
+    text: "Лечь спать"
+    start: "2026-10-22T23:00"
+  - phrase: "в 2 ночи посмотреть запуск"
+    text: "Посмотреть запуск"
+    start: "2026-10-23T02:00"
+  - phrase: "в 2 дня обед"
+    text: "Обед"
+    start: "2026-10-23T14:00"
+  - phrase: "в 3 часа дня забрать сына"
+    text: "Забрать сына"
+    start: "2026-10-23T15:00"
+  - phrase: "в пятницу в 3 часа дня планёрка"
+    text: "Планёрка"
+    start: "2026-10-23T15:00"
+  - phrase: "к 9 утра подготовить презентацию"
+    text: "Подготовить презентацию"
+    start: "2026-10-23T09:00"
+  - phrase: "к 10 быть в офисе"
+    text: "Быть в офисе"
+    start: "2026-10-22T22:00"
+    alternatives: ["завтра 10:00"]
+  - phrase: "около 7 вечера ужин"
+    text: "Ужин"
+    start: "2026-10-22T19:00"
+  - phrase: "в 21:30 выпить таблетку"
+    text: "Выпить таблетку"
+    start: "2026-10-22T21:30"
+  - phrase: "в 23:59 закрыть смену"
+    text: "Закрыть смену"
+    start: "2026-10-22T23:59"
+  - phrase: "в 00:30 выключить свет"
+    text: "Выключить свет"
+    start: "2026-10-23T00:30"
+  - phrase: "в 7:00 проснуться"
+    text: "Проснуться"
+    start: "2026-10-23T07:00"
+  - phrase: "в 07:00 проснуться"
+    text: "Проснуться"
+    start: "2026-10-23T07:00"
+  - phrase: "в 7:00 утра проснуться"
+    text: "Проснуться"
+    start: "2026-10-23T07:00"
+  - phrase: "в 9.30 позвонить клиенту"
+    text: "Позвонить клиенту"
+    start: "2026-10-23T09:30"
+  - phrase: "в 19 30 тренировка"
+    text: "Тренировка"
+    start: "2026-10-22T19:30"
+  - phrase: "в 10 часов 15 минут созвон"
+    text: "Созвон"
+    start: "2026-10-22T22:15"
+    alternatives: ["завтра 10:15"]
+  - phrase: "в 10 ч совещание"
+    text: "Совещание"
+    start: "2026-10-22T22:00"
+    alternatives: ["завтра 10:00"]
+  - phrase: "в полдень обед с коллегами"
+    text: "Обед с коллегами"
+    start: "2026-10-23T12:00"
+  - phrase: "в полночь выключить роутер"
+    text: "Выключить роутер"
+    start: "2026-10-23T00:00"
+  - phrase: "сегодня в 9 вечера кино"
+    text: "Кино"
+    start: "2026-10-22T21:00"
+  - phrase: "сегодня в 10 утра встреча"
+    text: "Встреча"
+    start: "2026-10-23T10:00"
+  - phrase: "завтра в девять утра стоматолог"
+    text: "Стоматолог"
+    start: "2026-10-23T09:00"
+  - phrase: "в 9 вечером позвонить"
+    text: "Позвонить"
+    start: "2026-10-22T21:00"
+  - phrase: "до 18:00 отправить документы"
+    text: "Отправить документы"
+    start: "2026-10-22T18:00"
+  - phrase: "сходить в магазин в 5"
+    text: "Сходить в магазин"
+    start: "2026-10-22T17:00"
+    alternatives: ["завтра 05:00"]
+  - phrase: "отправить письмо в 3 часа"
+    text: "Отправить письмо"
+    start: "2026-10-23T15:00"
+    alternatives: ["03:00"]
+  - phrase: "забрать заказ в пункте выдачи в 19"
+    text: "Забрать заказ в пункте выдачи"
+    start: "2026-10-22T19:00"
+  - phrase: "встреча в 15 кабинете в 14:00"
+    text: "Встреча в 15 кабинете"
+    start: "2026-10-23T14:00"
+  - phrase: "Завтра в 18:00 Встреча с Петровым"
+    text: "Встреча с Петровым"
+    start: "2026-10-23T18:00"
+
+  # Spoken numbers
+  - phrase: "напомни в девять тридцать вечера выпить таблетку"
+    text: "Выпить таблетку"
+    start: "2026-10-22T21:30"
+  - phrase: "полдевятого завтра встреча"
+    text: "Встреча"
+    start: "2026-10-23T08:30"
+    alternatives: ["20:30"]
+  - phrase: "без пятнадцати десять утра созвон"
+    text: "Созвон"
+    start: "2026-10-23T09:45"
+  - phrase: "без четверти девять созвон"
+    text: "Созвон"
+    start: "2026-10-22T20:45"
+    alternatives: ["завтра 08:45"]
+  - phrase: "в половине девятого вечера кино"
+    text: "Кино"
+    start: "2026-10-22T20:30"
+  - phrase: "в четверть восьмого будильник"
+    text: "Будильник"
+    start: "2026-10-22T19:15"
+    alternatives: ["завтра 07:15"]
+  - phrase: "в восемь вечера тренировка"
+    text: "Тренировка"
+    start: "2026-10-22T20:00"
+  - phrase: "в восемь двадцать выйти из дома"
+    text: "Выйти из дома"
+    start: "2026-10-22T20:20"
+    alternatives: ["завтра 08:20"]
+  - phrase: "в восемь ноль пять автобус"
+    text: "Автобус"
+    start: "2026-10-22T20:05"
+    alternatives: ["завтра 08:05"]
+  - phrase: "в девятнадцать тридцать тренировка"
+    text: "Тренировка"
+    start: "2026-10-22T19:30"
+  - phrase: "в двадцать один ноль ноль созвон"
+    text: "Созвон"
+    start: "2026-10-22T21:00"
+
+  # Parts of day
+  - phrase: "утром выпить витамины"
+    text: "Выпить витамины"
+    start: "2026-10-23T09:00"
+  - phrase: "днём погулять"
+    text: "Погулять"
+    start: "2026-10-23T13:00"
+  - phrase: "ночью проверить сервер"
+    text: "Проверить сервер"
+    start: "2026-10-22T22:00"
+  - phrase: "перед сном почистить зубы"
+    text: "Почистить зубы"
+    start: "2026-10-22T22:00"
+  - phrase: "после обеда вздремнуть"
+    text: "Вздремнуть"
+    start: "2026-10-23T13:00"
+  - phrase: "к обеду подготовить отчёт"
+    text: "Подготовить отчёт"
+    start: "2026-10-23T13:00"
+
+  # Daily recurrence
+  - phrase: "каждое утро в 7 зарядка"
+    text: "Зарядка"
+    kind: rrule
+    start: "2026-10-23T07:00"
+    rrule: "FREQ=DAILY;BYHOUR=7;BYMINUTE=0"
+  - phrase: "каждый вечер читать книгу"
+    text: "Читать книгу"
+    kind: rrule
+    start: "2026-10-22T19:00"
+    rrule: "FREQ=DAILY;BYHOUR=19;BYMINUTE=0"
+  - phrase: "каждое утро выпить воды"
+    text: "Выпить воды"
+    kind: rrule
+    start: "2026-10-23T09:00"
+    rrule: "FREQ=DAILY;BYHOUR=9;BYMINUTE=0"
+  - phrase: "каждую ночь в 3 проверить бэкап"
+    text: "Проверить бэкап"
+    kind: rrule
+    start: "2026-10-23T03:00"
+    rrule: "FREQ=DAILY;BYHOUR=3;BYMINUTE=0"
+  - phrase: "по утрам медитация"
+    text: "Медитация"
+    kind: rrule
+    start: "2026-10-23T09:00"
+    rrule: "FREQ=DAILY;BYHOUR=9;BYMINUTE=0"
+  - phrase: "по вечерам гулять с собакой"
+    text: "Гулять с собакой"
+    kind: rrule
+    start: "2026-10-22T19:00"
+    rrule: "FREQ=DAILY;BYHOUR=19;BYMINUTE=0"
+  - phrase: "ежедневно в 22:00 дневник"
+    text: "Дневник"
+    kind: rrule
+    start: "2026-10-22T22:00"
+    rrule: "FREQ=DAILY;BYHOUR=22;BYMINUTE=0"
+  - phrase: "каждый день в полдень обед"
+    text: "Обед"
+    kind: rrule
+    start: "2026-10-23T12:00"
+    rrule: "FREQ=DAILY;BYHOUR=12;BYMINUTE=0"
+  - phrase: "каждый день в 6 подъём"
+    text: "Подъём"
+    kind: rrule
+    start: "2026-10-23T06:00"
+    rrule: "FREQ=DAILY;BYHOUR=6;BYMINUTE=0"
+    alternatives: ["18:00"]
+  - phrase: "каждый день в 7 утра и в 9 вечера выгулять собаку"
+    text: "Выгулять собаку"
+    kind: rrule
+    start: "2026-10-22T21:00"
+    rrule: "FREQ=DAILY;BYHOUR=7,21;BYMINUTE=0"
+  - phrase: "каждый день в 8:30 и в 20:00 капли в глаза"
+    text: "Капли в глаза"
+    kind: rrule
+    start: "2026-10-22T20:00"
+    rrule: "FREQ=DAILY;BYHOUR=8,20;BYMINUTE=0,30;BYSETPOS=2,3"
+  - phrase: "каждый второй день отжимания"
+    text: "Отжимания"
+    kind: rrule
+    start: "2026-10-23T09:00"
+    rrule: "FREQ=DAILY;INTERVAL=2;BYHOUR=9;BYMINUTE=0"
+  - phrase: "каждый день с 10 до 18 работать"
+    text: "Работать"
+    kind: rrule
+    start: "2026-10-23T10:00"
+    rrule: "FREQ=DAILY;BYHOUR=10;BYMINUTE=0"
+
+  # Sub-daily recurrence
+  - phrase: "каждый час с 9 до 18 размяться"
+    text: "Размяться"
+    kind: rrule
+    start: "2026-10-22T16:00"
+    rrule: "FREQ=DAILY;BYHOUR=9,10,11,12,13,14,15,16,17,18;BYMINUTE=0"
+  - phrase: "каждые 30 минут с 9 до 12 пить воду"
+    text: "Пить воду"
+    kind: rrule
+    start: "2026-10-23T09:00"
+    rrule: "FREQ=DAILY;BYHOUR=9,10,11,12;BYMINUTE=0,30;BYSETPOS=1,2,3,4,5,6,7"
+  - phrase: "каждые полчаса пить воду"
+    text: "Пить воду"
+    kind: rrule
+    start: "2026-10-22T15:30"
+    rrule: "FREQ=MINUTELY;INTERVAL=30"
+  - phrase: "каждые 2 часа проверять почту"
+    text: "Проверять почту"
+    kind: rrule
+    start: "2026-10-22T17:00"
+    rrule: "FREQ=HOURLY;INTERVAL=2"
+
+  # Weekly recurrence
+  - phrase: "еженедельно в понедельник в 10 отчёт"
+    text: "Отчёт"
+    kind: rrule
+    start: "2026-10-26T10:00"
+    rrule: "FREQ=WEEKLY;BYDAY=MO;BYHOUR=10;BYMINUTE=0"
+    alternatives: ["22:00"]
+  - phrase: "каждый понедельник и среду в 19:30 спортзал"
+    text: "Спортзал"
+    kind: rrule
+    start: "2026-10-26T19:30"
+    rrule: "FREQ=WEEKLY;BYDAY=MO,WE;BYHOUR=19;BYMINUTE=30"
+  - phrase: "по средам и пятницам в 18 английский"
+    text: "Английский"
+    kind: rrule
+    start: "2026-10-23T18:00"
+    rrule: "FREQ=WEEKLY;BYDAY=WE,FR;BYHOUR=18;BYMINUTE=0"
+  - phrase: "по понедельникам, средам и пятницам в 7 утра бег"
+    text: "Бег"
+    kind: rrule
+    start: "2026-10-23T07:00"
+    rrule: "FREQ=WEEKLY;BYDAY=MO,WE,FR;BYHOUR=7;BYMINUTE=0"
+  - phrase: "по выходным в 11 звонок родителям"
+    text: "Звонок родителям"
+    kind: rrule
+    start: "2026-10-24T11:00"
+    rrule: "FREQ=WEEKLY;BYDAY=SA,SU;BYHOUR=11;BYMINUTE=0"
+    alternatives: ["23:00"]
+  - phrase: "по будням в 8 утра и в 6 вечера таблетки"
+    text: "Таблетки"
+    kind: rrule
+    start: "2026-10-22T18:00"
+    rrule: "FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR;BYHOUR=8,18;BYMINUTE=0"
+  - phrase: "каждый будний день в 7:30 подъём"
+    text: "Подъём"
+    kind: rrule
+    start: "2026-10-23T07:30"
+    rrule: "FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR;BYHOUR=7;BYMINUTE=30"
+  - phrase: "каждые выходные стирка"
+    text: "Стирка"
+    kind: rrule
+    start: "2026-10-24T09:00"
+    rrule: "FREQ=WEEKLY;BYDAY=SA,SU;BYHOUR=9;BYMINUTE=0"
+  - phrase: "каждый вторник и четверг в 7 утра бег"
+    text: "Бег"
+    kind: rrule
+    start: "2026-10-27T07:00"
+    rrule: "FREQ=WEEKLY;BYDAY=TU,TH;BYHOUR=7;BYMINUTE=0"
+  - phrase: "каждую среду вынести мусор"
+    text: "Вынести мусор"
+    kind: rrule
+    start: "2026-10-28T09:00"
+    rrule: "FREQ=WEEKLY;BYDAY=WE;BYHOUR=9;BYMINUTE=0"
+  - phrase: "каждое воскресенье в 20 планирование недели"
+    text: "Планирование недели"
+    kind: rrule
+    start: "2026-10-25T20:00"
+    rrule: "FREQ=WEEKLY;BYDAY=SU;BYHOUR=20;BYMINUTE=0"
+  - phrase: "каждую неделю в пятницу в 18 созвон с командой"
+    text: "Созвон с командой"
+    kind: rrule
+    start: "2026-10-23T18:00"
+    rrule: "FREQ=WEEKLY;BYDAY=FR;BYHOUR=18;BYMINUTE=0"
+  - phrase: "каждую неделю полить фикус"
+    text: "Полить фикус"
+    kind: rrule
+    start: "2026-10-29T09:00"
+    rrule: "FREQ=WEEKLY;BYHOUR=9;BYMINUTE=0"
+  - phrase: "раз в неделю поливать кактус"
+    text: "Поливать кактус"
+    kind: rrule
+    start: "2026-10-29T09:00"
+    rrule: "FREQ=WEEKLY;BYHOUR=9;BYMINUTE=0"
+  - phrase: "раз в 2 недели менять постельное бельё"
+    text: "Менять постельное бельё"
+    kind: rrule
+    start: "2026-10-29T09:00"
+    rrule: "FREQ=WEEKLY;INTERVAL=2;BYHOUR=9;BYMINUTE=0"
+  - phrase: "каждые две недели по вторникам в 18:00 стрижка"
+    text: "Стрижка"
+    kind: rrule
+    start: "2026-10-27T18:00"
+    rrule: "FREQ=WEEKLY;INTERVAL=2;BYDAY=TU;BYHOUR=18;BYMINUTE=0"
+  - phrase: "каждые 2 недели в субботу в 10 уборка"
+    text: "Уборка"
+    kind: rrule
+    start: "2026-10-24T10:00"
+    rrule: "FREQ=WEEKLY;INTERVAL=2;BYDAY=SA;BYHOUR=10;BYMINUTE=0"
+    alternatives: ["22:00"]
+
+  # Monthly recurrence
+  - phrase: "ежемесячно 5-го числа платить налоги"
+    text: "Платить налоги"
+    kind: rrule
+    start: "2026-11-05T09:00"
+    rrule: "FREQ=MONTHLY;BYMONTHDAY=5;BYHOUR=9;BYMINUTE=0"
+  - phrase: "каждое 15 число передать показания счётчиков"
+    text: "Передать показания счётчиков"
+    kind: rrule
+    start: "2026-11-15T09:00"
+    rrule: "FREQ=MONTHLY;BYMONTHDAY=15;BYHOUR=9;BYMINUTE=0"
+  - phrase: "15 числа каждого месяца передать показания"
+    text: "Передать показания"
+    kind: rrule
+    start: "2026-11-15T09:00"
+    rrule: "FREQ=MONTHLY;BYMONTHDAY=15;BYHOUR=9;BYMINUTE=0"
+  - phrase: "каждый месяц 20 числа платёж по кредиту"
+    text: "Платёж по кредиту"
+    kind: rrule
+    start: "2026-11-20T09:00"
+    rrule: "FREQ=MONTHLY;BYMONTHDAY=20;BYHOUR=9;BYMINUTE=0"
+  - phrase: "каждое первое число оплатить аренду"
+    text: "Оплатить аренду"
+    kind: rrule
+    start: "2026-11-01T09:00"
+    rrule: "FREQ=MONTHLY;BYMONTHDAY=1;BYHOUR=9;BYMINUTE=0"
+  - phrase: "каждое первое число месяца оплатить аренду"
+    text: "Оплатить аренду"
+    kind: rrule
+    start: "2026-11-01T09:00"
+    rrule: "FREQ=MONTHLY;BYMONTHDAY=1;BYHOUR=9;BYMINUTE=0"
+  - phrase: "каждый последний день месяца закрыть отчётность"
+    text: "Закрыть отчётность"
+    kind: rrule
+    start: "2026-10-31T09:00"
+    rrule: "FREQ=MONTHLY;BYMONTHDAY=-1;BYHOUR=9;BYMINUTE=0"
+  - phrase: "последнего числа подать отчётность"
+    text: "Подать отчётность"
+    kind: rrule
+    start: "2026-10-31T09:00"
+    rrule: "FREQ=MONTHLY;BYMONTHDAY=-1;BYHOUR=9;BYMINUTE=0"
+  - phrase: "каждую последнюю пятницу месяца в 17 отчёт"
+    text: "Отчёт"
+    kind: rrule
+    start: "2026-10-30T17:00"
+    rrule: "FREQ=MONTHLY;BYDAY=-1FR;BYHOUR=17;BYMINUTE=0"
+  - phrase: "в последнюю пятницу месяца корпоратив"
+    text: "Корпоратив"
+    kind: rrule
+    start: "2026-10-30T09:00"
+    rrule: "FREQ=MONTHLY;BYDAY=-1FR;BYHOUR=9;BYMINUTE=0"
+  - phrase: "в первый понедельник месяца планирование"
+    text: "Планирование"
+    kind: rrule
+    start: "2026-11-02T09:00"
+    rrule: "FREQ=MONTHLY;BYDAY=1MO;BYHOUR=9;BYMINUTE=0"
+  - phrase: "каждый месяц оплатить подписку"
+    text: "Оплатить подписку"
+    kind: rrule
+    start: "2026-11-22T09:00"
+    rrule: "FREQ=MONTHLY;BYHOUR=9;BYMINUTE=0"
+
+  # Yearly recurrence
+  - phrase: "каждый год 5 марта поздравить маму"
+    text: "Поздравить маму"
+    kind: rrule
+    start: "2027-03-05T09:00"
+    rrule: "FREQ=YEARLY;BYMONTHDAY=5;BYMONTH=3;BYHOUR=9;BYMINUTE=0"
+  - phrase: "ежегодно 31 декабря подвести итоги"
+    text: "Подвести итоги"
+    kind: rrule
+    start: "2026-12-31T09:00"
+    rrule: "FREQ=YEARLY;BYMONTHDAY=31;BYMONTH=12;BYHOUR=9;BYMINUTE=0"
+  - phrase: "напомни про день рождения Маши 12 июня"
+    text: "День рождения Маши"
+    kind: rrule
+    start: "2027-06-12T09:00"
+    rrule: "FREQ=YEARLY;BYMONTHDAY=12;BYMONTH=6;BYHOUR=9;BYMINUTE=0"
+  - phrase: "ДР мамы 3 апреля"
+    text: "ДР мамы"
+    kind: rrule
+    start: "2027-04-03T09:00"
+    rrule: "FREQ=YEARLY;BYMONTHDAY=3;BYMONTH=4;BYHOUR=9;BYMINUTE=0"
+  - phrase: "каждый год обновить страховку"
+    text: "Обновить страховку"
+    kind: rrule
+    start: "2027-10-22T09:00"
+    rrule: "FREQ=YEARLY;BYHOUR=9;BYMINUTE=0"
+
+  # Series bounds and implicit counts
+  - phrase: "каждый день в 9 до 30 ноября пить витамины"
+    text: "Пить витамины"
+    kind: rrule
+    start: "2026-10-23T09:00"
+    rrule: "FREQ=DAILY;BYHOUR=9;BYMINUTE=0;UNTIL=20261130T235959"
+    alternatives: ["21:00"]
+  - phrase: "каждый день в 9 до конца года пить витамины"
+    text: "Пить витамины"
+    kind: rrule
+    start: "2026-10-23T09:00"
+    rrule: "FREQ=DAILY;BYHOUR=9;BYMINUTE=0;UNTIL=20261231T235959"
+    alternatives: ["21:00"]
+  - phrase: "каждый день в 10 всего 5 раз пить таблетки"
+    text: "Пить таблетки"
+    kind: rrule
+    start: "2026-10-23T10:00"
+    rrule: "FREQ=DAILY;BYHOUR=10;BYMINUTE=0;COUNT=5"
+    alternatives: ["22:00"]
+  - phrase: "каждый день в 9 10 раз подряд делать упражнение"
+    text: "Делать упражнение"
+    kind: rrule
+    start: "2026-10-23T09:00"
+    rrule: "FREQ=DAILY;BYHOUR=9;BYMINUTE=0;COUNT=10"
+    alternatives: ["21:00"]
+  - phrase: "начиная с завтрашнего дня каждый день в 9 зарядка"
+    text: "Зарядка"
+    kind: rrule
+    start: "2026-10-23T09:00"
+    rrule: "FREQ=DAILY;BYHOUR=9;BYMINUTE=0"
+    alternatives: ["21:00"]
+  - phrase: "каждый день в 9 начиная с понедельника зарядка"
+    text: "Зарядка"
+    kind: rrule
+    start: "2026-10-26T09:00"
+    rrule: "FREQ=DAILY;BYHOUR=9;BYMINUTE=0"
+    alternatives: ["21:00"]
+  - phrase: "с 1 ноября каждый день в 8 витамины"
+    text: "Витамины"
+    kind: rrule
+    start: "2026-11-01T08:00"
+    rrule: "FREQ=DAILY;BYHOUR=8;BYMINUTE=0"
+    alternatives: ["20:00"]
+  - phrase: "со следующей недели по понедельникам в 10 планёрка"
+    text: "Планёрка"
+    kind: rrule
+    start: "2026-10-26T10:00"
+    rrule: "FREQ=WEEKLY;BYDAY=MO;BYHOUR=10;BYMINUTE=0"
+    alternatives: ["22:00"]
+  - phrase: "завтра в 8 и в 20 таблетки"
+    text: "Таблетки"
+    kind: rrule
+    start: "2026-10-23T08:00"
+    rrule: "FREQ=DAILY;BYHOUR=8,20;BYMINUTE=0;COUNT=2"
+  - phrase: "завтра в 10:00 и 15:00 звонки клиентам"
+    text: "Звонки клиентам"
+    kind: rrule
+    start: "2026-10-23T10:00"
+    rrule: "FREQ=DAILY;BYHOUR=10,15;BYMINUTE=0;COUNT=2"
+  - phrase: "в понедельник и среду в 10 бассейн"
+    text: "Бассейн"
+    kind: rrule
+    start: "2026-10-26T10:00"
+    rrule: "FREQ=WEEKLY;BYDAY=MO,WE;BYHOUR=10;BYMINUTE=0;COUNT=2"
+    alternatives: ["22:00"]
+
+  # Repeat after completion
+  - phrase: "каждые 3 дня после выполнения менять воду"
+    text: "Менять воду"
+    kind: after_completion
+    start: "2026-10-25T09:00"
+    interval: 3d
+  - phrase: "через неделю после последнего полива удобрить цветы"
+    text: "Удобрить цветы"
+    kind: after_completion
+    start: "2026-10-29T09:00"
+    interval: 7d
+
+  # Priority, nagging, pre-offsets, tags
+  - phrase: "важно: в 15:00 созвон с заказчиком"
+    text: "Созвон с заказчиком"
+    start: "2026-10-23T15:00"
+    priority: important
+  - phrase: "очень важно завтра в 10 подать документы"
+    text: "Подать документы"
+    start: "2026-10-23T10:00"
+    priority: critical
+    alternatives: ["22:00"]
+  - phrase: "‼️ через 5 минут выключить плиту"
+    text: "Выключить плиту"
+    start: "2026-10-22T15:05"
+    priority: critical
+  - phrase: "❗ в 18 забрать ребёнка из сада"
+    text: "Забрать ребёнка из сада"
+    start: "2026-10-22T18:00"
+    priority: important
+  - phrase: "позвонить шефу срочно в 16:00"
+    text: "Позвонить шефу"
+    start: "2026-10-22T16:00"
+    priority: critical
+  - phrase: "в 9 утра, важно, отправить отчёт"
+    text: "Отправить отчёт"
+    start: "2026-10-23T09:00"
+    priority: important
+  - phrase: "завтра в 7 разбудить, напоминай пока не отвечу"
+    text: "Разбудить"
+    start: "2026-10-23T07:00"
+    nagging: true
+    alternatives: ["19:00"]
+  - phrase: "настойчиво в 23 выпить лекарство"
+    text: "Выпить лекарство"
+    start: "2026-10-22T23:00"
+    nagging: true
+  - phrase: "до подтверждения в 8 утра принять лекарство"
+    text: "Принять лекарство"
+    start: "2026-10-23T08:00"
+    nagging: true
+  - phrase: "каждые 15 минут пока не отвечу выпить таблетку"
+    text: "Выпить таблетку"
+    kind: rrule
+    start: "2026-10-22T15:15"
+    rrule: "FREQ=MINUTELY;INTERVAL=15"
+    nagging: true
+  - phrase: "пока не сделаю напоминать каждые 15 минут выпить таблетку"
+    text: "Выпить таблетку"
+    kind: rrule
+    start: "2026-10-22T15:15"
+    rrule: "FREQ=MINUTELY;INTERVAL=15"
+    nagging: true
+  - phrase: "напомни за день и за час до встречи в пятницу в 15:00 встреча с юристом"
+    text: "Встреча с юристом"
+    start: "2026-10-23T15:00"
+    pre_offsets: [1d, 1h]
+  - phrase: "в пятницу в 15:00 встреча с юристом, напомни за 30 минут"
+    text: "Встреча с юристом"
+    start: "2026-10-23T15:00"
+    pre_offsets: [30m]
+  - phrase: "за час до 18:00 сдать отчёт"
+    text: "Сдать отчёт"
+    start: "2026-10-22T18:00"
+    pre_offsets: [1h]
+  - phrase: "#дом #покупки завтра купить лампочки"
+    text: "Купить лампочки"
+    start: "2026-10-23T09:00"
+    tags: ["дом", "покупки"]
+  - phrase: "завтра купить корм с тегом кот"
+    text: "Купить корм"
+    start: "2026-10-23T09:00"
+    tags: ["кот"]
+  - phrase: "через 10 минут #кухня снять пирог"
+    text: "Снять пирог"
+    start: "2026-10-22T15:10"
+    tags: ["кухня"]
+  - phrase: "завтра в 10 #работа созвон #важно"
+    text: "Созвон"
+    start: "2026-10-23T10:00"
+    tags: ["работа", "важно"]
+    alternatives: ["22:00"]
+
+  # Text cleanup
+  - phrase: "завтра в 9 отжаться 10 раз"
+    text: "Отжаться 10 раз"
+    start: "2026-10-23T09:00"
+    alternatives: ["21:00"]
+  - phrase: "пожалуйста напомни завтра в 10 позвонить в сервис"
+    text: "Позвонить в сервис"
+    start: "2026-10-23T10:00"
+    alternatives: ["22:00"]
+  - phrase: "напомни, пожалуйста, через 20 минут проверить духовку"
+    text: "Проверить духовку"
+    start: "2026-10-22T15:20"
+  - phrase: "завтра в 9, позвонить маме."
+    text: "Позвонить маме"
+    start: "2026-10-23T09:00"
+    alternatives: ["21:00"]
+  - phrase: "напомни мне о встрече завтра в 10"
+    text: "Встрече"
+    start: "2026-10-23T10:00"
+    alternatives: ["22:00"]
+  - phrase: "поздравить с днём рождения коллегу завтра в 10"
+    text: "Поздравить с днём рождения коллегу"
+    start: "2026-10-23T10:00"
+    alternatives: ["22:00"]
+
+  # Missing time or text
+  - phrase: "купить хлеб"
+    status: needs_time
+    text: "Купить хлеб"
+  - phrase: "напомни позвонить маме"
+    status: needs_time
+    text: "Позвонить маме"
+  - phrase: "не забыть оплатить свет"
+    status: needs_time
+    text: "Не забыть оплатить свет"
+  - phrase: "срочно позвонить шефу"
+    status: needs_time
+    text: "Позвонить шефу"
+  - phrase: "31 февраля купить подарок"
+    status: needs_time
+    text: "31 февраля купить подарок"
+  - phrase: "завтра в 9"
+    status: not_understood
+  - phrase: "в понедельник в 9:00"
+    status: not_understood
+  - phrase: "напомни"
+    status: not_understood
+  - phrase: "#работа"
+    status: not_understood
+  - phrase: "   "
+    status: not_understood
+
+  # Early morning
+  - phrase: "в 7 сходить в спортзал"
+    now: "2026-10-22T05:00"
+    text: "Сходить в спортзал"
+    start: "2026-10-22T07:00"
+    alternatives: ["19:00"]
+  - phrase: "в 3 проверить сервер"
+    now: "2026-10-22T05:00"
+    text: "Проверить сервер"
+    start: "2026-10-22T15:00"
+    alternatives: ["завтра 03:00"]
+  - phrase: "в 9 позвонить в банк"
+    now: "2026-10-22T05:00"
+    text: "Позвонить в банк"
+    start: "2026-10-22T09:00"
+    alternatives: ["21:00"]
+  - phrase: "сегодня купить хлеб"
+    now: "2026-10-22T05:00"
+    text: "Купить хлеб"
+    start: "2026-10-22T09:00"
+  - phrase: "утром выпить витамины"
+    now: "2026-10-22T05:00"
+    text: "Выпить витамины"
+    start: "2026-10-22T09:00"
+  - phrase: "каждый день в 8 зарядка"
+    now: "2026-10-22T05:00"
+    text: "Зарядка"
+    kind: rrule
+    start: "2026-10-22T08:00"
+    rrule: "FREQ=DAILY;BYHOUR=8;BYMINUTE=0"
+    alternatives: ["20:00"]
+  - phrase: "в четверг в 10 созвон"
+    now: "2026-10-22T05:00"
+    text: "Созвон"
+    start: "2026-10-22T10:00"
+    alternatives: ["22:00"]
+  - phrase: "каждые 2 часа с 10 до 20 пить воду"
+    now: "2026-10-22T05:00"
+    text: "Пить воду"
+    kind: rrule
+    start: "2026-10-22T10:00"
+    rrule: "FREQ=DAILY;BYHOUR=10,12,14,16,18,20;BYMINUTE=0"
+
+  # Late night
+  - phrase: "в 7 сходить в спортзал"
+    now: "2026-10-22T23:30"
+    text: "Сходить в спортзал"
+    start: "2026-10-23T07:00"
+    alternatives: ["19:00"]
+  - phrase: "сегодня купить хлеб"
+    now: "2026-10-22T23:30"
+    text: "Купить хлеб"
+    start: "2026-10-23T09:00"
+  - phrase: "в четверг в 10 созвон"
+    now: "2026-10-22T23:30"
+    text: "Созвон"
+    start: "2026-10-29T10:00"
+    alternatives: ["22:00"]
+  - phrase: "в пятницу в 10 созвон"
+    now: "2026-10-22T23:30"
+    text: "Созвон"
+    start: "2026-10-23T10:00"
+    alternatives: ["22:00"]

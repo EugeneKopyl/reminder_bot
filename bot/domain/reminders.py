@@ -51,3 +51,11 @@ class DayPeriodDefaults:
     evening: time = time(19)
     night: time = time(22)
     date_only: time = time(9)
+
+
+@dataclass(frozen=True, slots=True)
+class UserProfile:
+    user_id: int
+    timezone: str
+    timezone_confirmed: bool
+    day_periods: DayPeriodDefaults

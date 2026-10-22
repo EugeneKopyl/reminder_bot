@@ -1,0 +1,13 @@
+services:
+  bot:
+    image: reminder-bot:dev
+    read_only: false
+    environment:
+      LOG_LEVEL: DEBUG
+    develop:
+      watch:
+        - action: sync+restart
+          path: ./bot
+          target: /app/bot
+        - action: rebuild
+          path: uv.lock

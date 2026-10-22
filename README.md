@@ -20,6 +20,16 @@ Telegram-бот для напоминаний. Надиктуйте голосо
 
 Python, aiogram, SQLite, локальное распознавание речи, Telegram Mini App, Docker Compose.
 
+## Разработка
+
+1. Скопируйте `.env.example` в `.env` и укажите токен бота от [@BotFather](https://t.me/BotFather).
+2. Запуск без Docker: `uv sync && uv run python -m bot`.
+3. Запуск в Docker с перезапуском при изменениях: `docker compose -f compose.yml -f compose.dev.yml watch`.
+
+Проверки: `uv run ruff check . && uv run mypy bot tests && uv run pytest`.
+
+Ветки: `main` — релизы, `develop` — интеграция, работа ведётся в `feature/*`, `fix/*`, `chore/*` от `develop`.
+
 ## Статус
 
 В активной разработке.

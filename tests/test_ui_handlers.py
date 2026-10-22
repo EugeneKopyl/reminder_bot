@@ -1,16 +1,6 @@
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
-from ui_fakes import (
-    FakeReminderService,
-    FixedClock,
-    make_bot,
-    make_callback,
-    make_message,
-    make_state,
-    parser_returning,
-)
-
 from bot.domain.occurrences import ActionOutcome, Done, PlannedFire, SnoozeUntil
 from bot.domain.parsing import Alternative, ParseResult, ParseStatus
 from bot.domain.ports import ReminderService
@@ -28,6 +18,15 @@ from bot.telegram.callbacks import (
     QuickTimeCallback,
 )
 from bot.telegram.states import PendingReminder
+from tests.ui_fakes import (
+    FakeReminderService,
+    FixedClock,
+    make_bot,
+    make_callback,
+    make_message,
+    make_state,
+    parser_returning,
+)
 
 MOSCOW = ZoneInfo("Europe/Moscow")
 TOMORROW_NINE = Schedule(ScheduleKind.ONCE, datetime(2026, 10, 23, 9, 0))
